@@ -32,9 +32,47 @@ dependencies:
     sdk: flutter
 
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+    # The following adds the Cupertino Icons font to your application.
+    # Use with the CupertinoIcons class for iOS style icons.
+
   cupertino_icons: ^1.0.8
+  firebase_core: ^3.5.0
+  firebase_auth: ^5.3.0
+  cloud_firestore: ^5.4.2
+  google_sign_in: ^5.3.3
+  dio: ^5.7.0
+  get: ^4.6.6
+  iconify_flutter_plus: ^1.0.3
+  flutter_spinkit: ^5.1.0
+  fluttertoast: ^8.2.1
+  flutter_local_notifications: ^17.2.2
+  geolocator: ^13.0.1
+  geocoding: ^3.0.0
+  google_maps_flutter: ^2.1.8
+  lottie: ^3.1.2
+  flutter_polyline_points: ^2.1.0
+  location: ^6.0.2
+  shared_preferences: ^2.0.15
+  google_maps_flutter_web: ^0.5.10
+  firebase_messaging: ^15.1.2
+  provider: ^6.0.5
+  http: ^1.2.2
+  intl: ^0.19.0
+  url_launcher: ^6.1.6
+  image_picker: ^1.1.2
+  flutter_svg: ^2.0.10+1
+  firebase_storage: ^12.3.1
+  html: ^0.15.0
+  flutter_secure_storage: ^9.2.2
+  animated_text_kit: ^4.2.1
+  in_app_purchase: ^3.0.6
+  flutter_staggered_grid_view: ^0.7.0
+  flutter_animated_dialog: ^2.0.0  # For animated dialogs
+  flutter_sequence_animation: ^4.0.0  # For sequence animations
+  page_transition: ^2.0.0  # For page transition animations
+  animations: ^2.0.0  # For pre-built animations
+  google_fonts:
+
 
 dev_dependencies:
   flutter_test:
