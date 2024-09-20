@@ -1,45 +1,70 @@
-import 'package:e_savior/presentation/pages/profile.dart';
+import 'package:e_savior/presentation/pages/on_boarding_page.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+
+
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Emergency Ambulance App',
+      title: 'Driven',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF1E88E5),
-          primary: const Color(0xFF1E88E5),
-          secondary: const Color(0xFFFF3D00),
-        ),
+        primaryColor: const Color(0xFF4CD964),
         scaffoldBackgroundColor: Colors.white,
-        textTheme: const TextTheme(
-          displayLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
-          displayMedium: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black87),
-          bodyLarge: TextStyle(fontSize: 16, color: Colors.black87),
-          bodyMedium: TextStyle(fontSize: 14, color: Colors.black54),
+        textTheme: GoogleFonts.poppinsTextTheme(
+          Theme.of(context).textTheme,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF1E88E5),
-            foregroundColor: Colors.white,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            backgroundColor: const Color(0xFF4CD964),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            padding: const EdgeInsets.symmetric(vertical: 16),
+          ),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Colors.grey[200],
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide.none,
           ),
         ),
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => ProfileScreen(),
-        // '/login': (context) => LoginScreen(),
-        // '/signup': (context) => SignupScreen(),
-        // '/home': (context) => HomeScreen(),
-        // '/booking': (context) => BookingScreen(),
-        // '/profile': (context) => ProfileScreen(),
-      },
+      // home: const MapScreen(),
+      home: const OnboardingScreen(),
+      // home: const UserProfileScreen(),
+      // home: const OtpVerificationScreen(),
+      // home: const ResetPasswordScreen(), 
+    );
+  }
+}
+
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text(
+          'Driven',
+          style: GoogleFonts.poppins(
+            fontSize: 48,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+      ),
     );
   }
 }

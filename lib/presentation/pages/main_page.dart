@@ -1,7 +1,9 @@
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:e_savior/presentation/pages/user/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:myapp/user/home_screen.dart';
+
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

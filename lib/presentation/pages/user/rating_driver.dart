@@ -1,5 +1,6 @@
+import 'package:e_savior/presentation/pages/driver/driver_details.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/driver/driver_details.dart';
+
 
 
 class RateDriverScreen extends StatefulWidget {

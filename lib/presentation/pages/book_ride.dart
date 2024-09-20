@@ -1,6 +1,7 @@
+import 'package:e_savior/presentation/pages/car/car_arriving_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myapp/car/car_arriving_screen.dart';
+
 
 
 class BookRide extends StatefulWidget {

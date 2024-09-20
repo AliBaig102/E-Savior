@@ -1,5 +1,6 @@
+import 'package:e_savior/presentation/pages/sign_up.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/sign_up.dart';
+
 
 
 class OnboardingScreen extends StatefulWidget {

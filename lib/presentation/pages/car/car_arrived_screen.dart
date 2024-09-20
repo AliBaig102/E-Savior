@@ -1,6 +1,7 @@
+import 'package:e_savior/presentation/pages/user/rating_driver.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:myapp/user/rating_driver.dart';
+
 
 
 class ArrivedAtDestinationScreen extends StatelessWidget {

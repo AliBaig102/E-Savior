@@ -1,9 +1,8 @@
 // import 'package:e_savior/presentation/pages/user_home_screen.dart';
+import 'package:e_savior/presentation/pages/forgotpassword.dart';
+import 'package:e_savior/presentation/pages/main_page.dart';
+import 'package:e_savior/presentation/pages/sign_up.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/ForgotPassword.dart';
-import 'package:myapp/main_page.dart';
-
-import 'package:myapp/sign_up.dart';
 
 
 
