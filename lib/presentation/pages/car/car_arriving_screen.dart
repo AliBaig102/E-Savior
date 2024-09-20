@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class CarArrivingScreen extends StatelessWidget {
-  const CarArrivingScreen({Key? key}) : super(key: key);
+  const CarArrivingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class BookRide extends StatefulWidget {
-  const BookRide({Key? key}) : super(key: key);
+  const BookRide({super.key});
 
   @override
   _BookRide createState() => _BookRide();

@@ -86,7 +86,6 @@ class _CarSelectionScreenState extends State<CarSelectionScreen> {
                             builder: (context) =>  const CarSearchingScreen(),
                           ),);
                         },
-                        child: const Text('Confirm'),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).primaryColor,
                           shape: RoundedRectangleBorder(
@@ -94,6 +93,7 @@ class _CarSelectionScreenState extends State<CarSelectionScreen> {
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 16),
                         ),
+                        child: const Text('Confirm'),
                       ),
                     ),
                   ),

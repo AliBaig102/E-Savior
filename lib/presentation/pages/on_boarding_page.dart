@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 
 class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({Key? key}) : super(key: key);
+  const OnboardingScreen({super.key});
 
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
@@ -101,11 +101,11 @@ class OnboardingPage extends StatelessWidget {
   final String description;
 
   const OnboardingPage({
-    Key? key,
+    super.key,
     required this.image,
     required this.title,
     required this.description,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
