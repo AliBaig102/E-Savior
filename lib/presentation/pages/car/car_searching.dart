@@ -2,7 +2,6 @@ import 'package:e_savior/presentation/pages/book_ride.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-
 class CarSearchingScreen extends StatelessWidget {
   const CarSearchingScreen({super.key});
 
@@ -57,16 +56,26 @@ class CarSearchingScreen extends StatelessWidget {
                     child: OutlinedButton(
                       onPressed: () {
                         // Handle cancel search
+                        Navigator.pop(context);
                       },
-                      child: const Text('Cancel'),
+                      style: OutlinedButton.styleFrom(
+                          backgroundColor: Theme.of(context).primaryColor),
+                      child: Text(
+                        'Cancel',
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: Colors.red, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
-                  TextButton(onPressed: (){
-                     Navigator.of(context).pushReplacement(
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) =>  const BookRide(),
-                          ),);
-                  }, child: const Text("for developer"))
+                            builder: (context) => const BookRide(),
+                          ),
+                        );
+                      },
+                      child: const Text("for developer"))
                 ],
               ),
             ),

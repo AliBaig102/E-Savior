@@ -2,10 +2,6 @@ import 'package:e_savior/presentation/pages/car/car_arriving_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
-
-
-
 class BookRide extends StatefulWidget {
   const BookRide({super.key});
 
@@ -28,11 +24,13 @@ class _BookRide extends State<BookRide> {
                 child: Stack(
                   children: [
                     // Map background
-                    Image.network(
-                      '/placeholder.svg?height=700&width=390',
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: double.infinity,
+                    SizedBox(
+                      child: Image.network(
+                        '?height=700&width=390',
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: double.infinity,
+                      ),
                     ),
                     // Route line
                     Positioned(
@@ -77,25 +75,24 @@ class _BookRide extends State<BookRide> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: const BoxDecoration(
-                  color: Colors.white,
+                  color: Colors.red,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      'Car Founded',
-                      style: GoogleFonts.poppins(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+                    Text('Car Founded',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge
+                            ?.copyWith(fontWeight: FontWeight.w900)),
                     const SizedBox(height: 16),
                     Row(
                       children: [
                         const CircleAvatar(
-                          backgroundImage: NetworkImage('/placeholder.svg?height=48&width=48'),
+                          backgroundImage: NetworkImage(
+                              '/placeholder.svg?height=48&width=48'),
                           radius: 24,
                         ),
                         const SizedBox(width: 12),
@@ -217,10 +214,12 @@ class _BookRide extends State<BookRide> {
                           child: ElevatedButton(
                             onPressed: () {
                               // Handle View E-Receipt
-                               Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) =>  const CarArrivingScreen(),
-                          ),);
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const CarArrivingScreen(),
+                                ),
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF4CD964),

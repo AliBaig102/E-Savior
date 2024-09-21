@@ -1,8 +1,16 @@
+// import 'package:e_savior/presentation/pages/main_page.dart';
+// import 'package:e_savior/presentation/widgets/user_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
-class UserProfileScreen extends StatelessWidget {
+class UserProfileScreen extends StatefulWidget {
+  // final title;
   const UserProfileScreen({super.key});
 
+  @override
+  State<UserProfileScreen> createState() => _UserProfileScreenState();
+}
+
+class _UserProfileScreenState extends State<UserProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +27,8 @@ class UserProfileScreen extends StatelessWidget {
             const Center(
               child: CircleAvatar(
                 radius: 50,
-                backgroundImage: NetworkImage('https://example.com/user_image.jpg'),
+                backgroundImage:
+                    NetworkImage('https://example.com/user_image.jpg'),
               ),
             ),
             const SizedBox(height: 16),
@@ -37,11 +46,11 @@ class UserProfileScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: _buildBottomNavBar(context),
     );
   }
 
-  Widget _buildProfileOption(BuildContext context, String title, IconData icon) {
+  Widget _buildProfileOption(
+      BuildContext context, String title, IconData icon) {
     return ListTile(
       leading: Container(
         padding: const EdgeInsets.all(8),
@@ -56,21 +65,6 @@ class UserProfileScreen extends StatelessWidget {
       onTap: () {
         // Handle option tap
       },
-    );
-  }
-
-  Widget _buildBottomNavBar(BuildContext context) {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      currentIndex: 3, // Profile tab is selected
-      selectedItemColor: Theme.of(context).primaryColor,
-      unselectedItemColor: Colors.grey,
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Booking'),
-        BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Message'),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-      ],
     );
   }
 }

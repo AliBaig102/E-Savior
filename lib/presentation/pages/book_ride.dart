@@ -1,8 +1,6 @@
 import 'package:e_savior/presentation/pages/car/car_arriving_screen.dart';
+import 'package:e_savior/presentation/pages/driver/driver_details.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-
 
 class BookRide extends StatefulWidget {
   const BookRide({super.key});
@@ -16,67 +14,41 @@ class _BookRide extends State<BookRide> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: theme.scaffoldBackgroundColor,
+        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          'Book Ride',
+          style:
+              theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.pop(context); // Handle back navigation
+          },
+        ),
+      ),
       body: Stack(
         children: [
           // Map and bottom card
           Column(
             children: [
               Expanded(
-                child: Stack(
-                  children: [
-                    // Map background
-                    Image.network(
-                      '/placeholder.svg?height=700&width=390',
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: double.infinity,
-                    ),
-                    // Route line
-                    Positioned(
-                      top: 100,
-                      left: 20,
-                      child: CustomPaint(
-                        size: const Size(200, 300),
-                        painter: RoutePainter(),
-                      ),
-                    ),
-                    // Start point
-                    Positioned(
-                      top: 100,
-                      left: 20,
-                      child: Container(
-                        width: 16,
-                        height: 16,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF4CD964),
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white, width: 3),
-                        ),
-                      ),
-                    ),
-                    // End point
-                    Positioned(
-                      bottom: 100,
-                      right: 40,
-                      child: Container(
-                        width: 16,
-                        height: 16,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF4CD964),
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white, width: 3),
-                        ),
-                      ),
-                    ),
-                  ],
+                child: Image.network(
+                  "assets/images/greybackground.png?height=900&width=390",
+                  height: 500,
+                  fit: BoxFit.cover,
                 ),
               ),
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: const BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,50 +56,62 @@ class _BookRide extends State<BookRide> {
                   children: [
                     Text(
                       'Car Founded',
-                      style: GoogleFonts.poppins(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge
+                          ?.copyWith(fontWeight: FontWeight.w900),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 20),
                     Row(
                       children: [
-                        const CircleAvatar(
-                          backgroundImage: NetworkImage('/placeholder.svg?height=48&width=48'),
-                          radius: 24,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const DriverDetailsScreen(),
+                              ),
+                            );
+                          },
+                          child: const CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                '/placeholder.svg?height=48&width=48'),
+                            radius: 24,
+                          ),
                         ),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Amir Hassan',
-                                style: GoogleFonts.poppins(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              Text(
-                                '\$7/km',
-                                style: GoogleFonts.poppins(
-                                  fontSize: 14,
-                                  color: Colors.grey[600],
-                                ),
-                              ),
+                              Text('Amir Hassan',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                              Text('\$7/km',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey[700])),
                             ],
                           ),
                         ),
-                        Text(
-                          '5 Min Away',
-                          style: GoogleFonts.poppins(
-                            fontSize: 14,
-                            color: Colors.grey[600],
-                          ),
-                        ),
+                        Text('5 Min Away',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey[700])),
                       ],
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 30),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
@@ -137,7 +121,7 @@ class _BookRide extends State<BookRide> {
                           });
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF4CD964),
+                          backgroundColor: Theme.of(context).primaryColor,
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
@@ -145,11 +129,10 @@ class _BookRide extends State<BookRide> {
                         ),
                         child: Text(
                           'Request Ride',
-                          style: GoogleFonts.poppins(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                         ),
                       ),
                     ),
@@ -195,19 +178,19 @@ class _BookRide extends State<BookRide> {
                         const SizedBox(height: 24),
                         Text(
                           'Ride Accepted!',
-                          style: GoogleFonts.poppins(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                         ),
                         const SizedBox(height: 16),
                         Text(
                           'Lorem ipsum is simply dummy text of the Lorem ipsum has been the industry\'s',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
-                            fontSize: 14,
-                            color: Colors.grey[600],
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                         ),
                         const SizedBox(height: 24),
                         SizedBox(
@@ -215,10 +198,12 @@ class _BookRide extends State<BookRide> {
                           child: ElevatedButton(
                             onPressed: () {
                               // Handle View E-Receipt
-                               Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) =>  const CarArrivingScreen(),
-                          ),);
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const CarArrivingScreen(),
+                                ),
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF4CD964),
@@ -229,11 +214,12 @@ class _BookRide extends State<BookRide> {
                             ),
                             child: Text(
                               'Track Driver',
-                              style: GoogleFonts.poppins(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                             ),
                           ),
                         ),
@@ -263,24 +249,4 @@ class _BookRide extends State<BookRide> {
       ),
     );
   }
-}
-
-class RoutePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.black
-      ..strokeWidth = 3
-      ..style = PaintingStyle.stroke;
-
-    final path = Path()
-      ..moveTo(0, 0)
-      ..lineTo(size.width * 0.5, size.height * 0.3)
-      ..lineTo(size.width, size.height);
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

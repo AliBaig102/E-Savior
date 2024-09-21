@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
-
 class CarSelectionScreen extends StatefulWidget {
   const CarSelectionScreen({super.key});
 
@@ -28,9 +26,14 @@ class _CarSelectionScreenState extends State<CarSelectionScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.of(context).pop(context),
         ),
-        title: const Text('Select Car', style: TextStyle(color: Colors.black)),
+        title: Text('Select Ambulance',
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge
+                ?.copyWith(fontWeight: FontWeight.bold)),
+        centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -50,7 +53,8 @@ class _CarSelectionScreenState extends State<CarSelectionScreen> {
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(16)),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),
@@ -81,10 +85,11 @@ class _CarSelectionScreenState extends State<CarSelectionScreen> {
                       child: ElevatedButton(
                         onPressed: () {
                           // Handle confirm button tap
-                           Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) =>  const CarSearchingScreen(),
-                          ),);
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const CarSearchingScreen(),
+                            ),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).primaryColor,
@@ -93,7 +98,13 @@ class _CarSelectionScreenState extends State<CarSelectionScreen> {
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 16),
                         ),
-                        child: const Text('Confirm'),
+                        child: Text(
+                          'Confirm',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   ),
@@ -120,27 +131,42 @@ class _CarSelectionScreenState extends State<CarSelectionScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                'Intercity',
-                style: GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+              // Image.asset('./assets/11.png', height: 60),
+              const SizedBox(
+                  height: 60,
+                  width: 90,
+                  child: ColoredBox(
+                    color: Colors.red,
+                    child: Text("data"),
+                  )),
+              const SizedBox(
+                width: 10,
               ),
-              Text(
-                'Price: \$7/km',
-                style: GoogleFonts.poppins(
-                  fontSize: 14,
-                  color: Colors.grey[600],
-                ),
-              ),
+              Column(
+                // mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Intercity',
+                    style: GoogleFonts.poppins(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    'Price: \$7/km',
+                    style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
-          const SizedBox(height: 8),
-          Image.asset('./assets/11.png', height: 60),
-          const SizedBox(height: 8),
+          const SizedBox(height: 25),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -181,10 +207,11 @@ class _CarSelectionScreenState extends State<CarSelectionScreen> {
       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
       onTap: () {
         // Handle payment method selection
-         Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) =>  const PaymentMethodsScreen(),
-                          ),);
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const PaymentMethodsScreen(),
+          ),
+        );
       },
     );
   }

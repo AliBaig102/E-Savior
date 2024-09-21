@@ -35,29 +35,31 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               Text(
                 'Reset Your Password',
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
               ),
               const SizedBox(height: 8),
               Text(
                 'Lorem Ipsum is simply dummy text of the Lorem Ipsum has been the industry\'s',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.grey[600],
-                ),
+                      color: Colors.grey[600],
+                    ),
               ),
               const SizedBox(height: 32),
               _buildPasswordField(
                 controller: _passwordController,
                 obscureText: _obscurePassword,
-                onToggleVisibility: () => setState(() => _obscurePassword = !_obscurePassword),
+                onToggleVisibility: () =>
+                    setState(() => _obscurePassword = !_obscurePassword),
                 hintText: 'New Password',
               ),
               const SizedBox(height: 16),
               _buildPasswordField(
                 controller: _confirmPasswordController,
                 obscureText: _obscureConfirmPassword,
-                onToggleVisibility: () => setState(() => _obscureConfirmPassword = !_obscureConfirmPassword),
+                onToggleVisibility: () => setState(
+                    () => _obscureConfirmPassword = !_obscureConfirmPassword),
                 hintText: 'Confirm New Password',
               ),
               const Spacer(),
@@ -67,10 +69,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   onPressed: () {
                     // Handle password reset logic
                     Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) =>  const SignInPage(),
-                          ),
-                        );
+                      MaterialPageRoute(
+                        builder: (context) => const SignInPage(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).primaryColor,

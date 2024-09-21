@@ -1,8 +1,6 @@
 import 'package:e_savior/presentation/pages/car/car_selection.dart';
 import 'package:flutter/material.dart';
 
-
-
 class PlanYourRideScreen extends StatefulWidget {
   const PlanYourRideScreen({super.key});
 
@@ -40,15 +38,6 @@ class _PlanYourRideScreenState extends State<PlanYourRideScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildOptionButton(context,
-                    label: 'Pickup Now', icon: Icons.schedule),
-                _buildOptionButton(context,
-                    label: 'For Me', icon: Icons.person),
-              ],
-            ),
             const SizedBox(height: 24),
             _buildLocationFields(),
             const SizedBox(height: 32),
@@ -75,24 +64,6 @@ class _PlanYourRideScreenState extends State<PlanYourRideScreen> {
     );
   }
 
-  Widget _buildOptionButton(BuildContext context,
-      {required String label, required IconData icon}) {
-    final theme = Theme.of(context);
-
-    return OutlinedButton.icon(
-      onPressed: () {},
-      icon: Icon(icon, color: theme.primaryColor),
-      label: Text(
-        label,
-        style: theme.textTheme.labelLarge?.copyWith(color: theme.primaryColor),
-      ),
-      style: OutlinedButton.styleFrom(
-        side: BorderSide(color: theme.primaryColor),
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-      ),
-    );
-  }
-
   Widget _buildLocationFields() {
     final theme = Theme.of(context);
 
@@ -112,21 +83,24 @@ class _PlanYourRideScreenState extends State<PlanYourRideScreen> {
           label: 'Pickoff Point',
           hintText: 'Enter dropoff location',
         ),
-        const SizedBox(height: 20,),
+        const SizedBox(
+          height: 20,
+        ),
         ElevatedButton(
           onPressed: () {
             Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) =>  const CarSelectionScreen(),
-                          ),
-                        );
+              MaterialPageRoute(
+                builder: (context) => const CarSelectionScreen(),
+              ),
+            );
           },
           style: ElevatedButton.styleFrom(
             minimumSize: const Size(double.infinity, 20),
           ),
           child: Text(
             "Next",
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: theme.textTheme.bodyLarge
+                ?.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
       ],
@@ -144,8 +118,10 @@ class _PlanYourRideScreenState extends State<PlanYourRideScreen> {
       children: [
         Text(
           label,
-          style:
-              theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+          style: Theme.of(context)
+              .textTheme
+              .bodyLarge
+              ?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
         TextField(

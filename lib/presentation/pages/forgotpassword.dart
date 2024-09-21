@@ -2,7 +2,6 @@ import 'package:e_savior/presentation/pages/otp_verification.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({super.key});
 
@@ -26,16 +25,16 @@ class ForgotPasswordScreen extends StatelessWidget {
               Text(
                 'Forgot Password',
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
               ),
               const SizedBox(height: 8),
               Text(
                 'Lorem Ipsum is simply dummy text of the Lorem Ipsum has been the industry\'s',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.grey[600],
-                ),
+                      color: Colors.grey[600],
+                    ),
               ),
               const SizedBox(height: 32),
               TextFormField(
@@ -59,11 +58,11 @@ class ForgotPasswordScreen extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     // Handle send code logic
-                     Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) =>  const OtpVerificationScreen(),
-                          ),
-                        );
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => const OtpVerificationScreen(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).primaryColor,

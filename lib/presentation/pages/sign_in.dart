@@ -4,9 +4,6 @@ import 'package:e_savior/presentation/pages/main_page.dart';
 import 'package:e_savior/presentation/pages/sign_up.dart';
 import 'package:flutter/material.dart';
 
-
-
-
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
 
@@ -88,15 +85,15 @@ class _SignInPageState extends State<SignInPage> {
                 ),
               ),
               const SizedBox(height: 16),
-               Align(
+              Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: (){
-                       Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) =>  const ForgotPasswordScreen(),
-                          ),
-                        );
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const ForgotPasswordScreen(),
+                        ),
+                      );
                     },
                     child: const Text(
                       'Forgot Password?',
@@ -114,21 +111,25 @@ class _SignInPageState extends State<SignInPage> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: const Text('Sign In', style: TextStyle(fontSize: 18)),
+                child: Text('Sign In',
+                    style: Theme.of(context).textTheme.titleLarge),
                 onPressed: () {
                   Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) =>  const HomePage(),
-                          ),);
+                    MaterialPageRoute(
+                      builder: (context) => const HomePage(),
+                    ),
+                  );
                 },
               ),
               const SizedBox(height: 24),
               const Center(child: Text('Or Sign in with')),
               const SizedBox(height: 24),
-               Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _socialButton('assets/google_icon.png'),
+                  TextButton(
+                      onPressed: () {},
+                      child: _socialButton('./assets/images/google_icon.png')),
                   // const SizedBox(width: 16),
                   // _socialButton('assets/facebook_icon.png'),
                   // const SizedBox(width: 16),
@@ -136,24 +137,23 @@ class _SignInPageState extends State<SignInPage> {
                 ],
               ),
               const Spacer(),
-              
-                Row(
+
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text('Do not have an account?'),
                   TextButton(
                     onPressed: () {
-                       Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) =>  const SignUpScreen(),
-                          ),
-                        );
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const SignUpScreen(),
+                        ),
+                      );
                     },
                     child: const Text('Sign Up'),
                   ),
                 ],
               ),
-              
             ],
           ),
         ),

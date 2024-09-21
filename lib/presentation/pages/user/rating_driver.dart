@@ -1,7 +1,5 @@
-import 'package:e_savior/presentation/pages/driver/driver_details.dart';
+// import 'package:e_savior/presentation/pages/driver/driver_details.dart';
 import 'package:flutter/material.dart';
-
-
 
 class RateDriverScreen extends StatefulWidget {
   const RateDriverScreen({super.key});
@@ -31,7 +29,8 @@ class _RateDriverScreenState extends State<RateDriverScreen> {
             const Center(
               child: CircleAvatar(
                 radius: 40,
-                backgroundImage: NetworkImage('https://example.com/driver_image.jpg'),
+                backgroundImage:
+                    NetworkImage('https://example.com/driver_image.jpg'),
               ),
             ),
             const SizedBox(height: 16),
@@ -111,10 +110,12 @@ class _RateDriverScreenState extends State<RateDriverScreen> {
               child: ElevatedButton(
                 onPressed: () {
                   // Handle submit rating and tip
-                  Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) =>  const DriverDetailsScreen(),
-                          ),);
+
+                  // Navigator.of(context).pushReplacement(
+                  //   MaterialPageRoute(
+                  //     builder: (context) => const DriverDetailsScreen(),
+                  //   ),
+                  // );
                 },
                 child: const Text('Submit'),
               ),
@@ -131,7 +132,9 @@ class _RateDriverScreenState extends State<RateDriverScreen> {
         // Handle tip selection
       },
       style: ElevatedButton.styleFrom(
-        foregroundColor: amount == 3 ? Colors.white : Colors.black, backgroundColor: amount == 3 ? Theme.of(context).primaryColor : Colors.grey[200],
+        foregroundColor: amount == 3 ? Colors.white : Colors.black,
+        backgroundColor:
+            amount == 3 ? Theme.of(context).primaryColor : Colors.grey[200],
       ),
       child: Text('\$$amount'),
     );

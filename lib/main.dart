@@ -1,10 +1,9 @@
+import 'package:e_savior/presentation/pages/admin/admin_home_screen.dart';
+import 'package:e_savior/presentation/pages/admin/create_driver_screen.dart';
 import 'package:e_savior/presentation/pages/driver/driver_home_screen.dart';
 import 'package:e_savior/presentation/pages/on_boarding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-
-
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {  
     return MaterialApp(
       title: 'Driven',
       theme: ThemeData(
@@ -41,36 +40,11 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      // home: const MapScreen(),
+
+      home: const OnboardingScreen(),
+      //  home: const AdminHomeScreen(),
+
       // home: const DriverHomeScreen(),
-       home: const DriverHomeScreen(),
-      
-      
-      // home: const SignInScreen(),
-      // home: const SignUpScreen(),
-      // home: const ForgotPasswordScreen(),
-      // home: const VerifyEmailScreen(),
-      // home: const AddVehicleScreen(),
-      // home: const VehicleDetailsScreen(),
-      // home: const RideRequestScreen(),
-      // home: const RideDetailsScreen(),
-      // home: const BookRideScreen(),
-      // home: const MyRidesScreen(),
-      // home: const PaymentScreen(),
-      // home: const AddDriverScreen(),
-      // home: const DriverDetailsScreen(),
-      // home: const MyDriversScreen(),
-      // home: const MyTripsScreen(),
-      // home: const MyReviewsScreen(),
-      // home: const SettingsScreen(),
-      // home: const HelpSupportScreen(),
-      // home: const AboutScreen(),
-      // home: const PrivacyPolicyScreen(),
-      // home: const TermsAndConditionsScreen
-      // home: const OnboardingScreen(),
-      // home: const UserProfileScreen(),
-      // home: const OtpVerificationScreen(),
-      // home: const ResetPasswordScreen(), 
     );
   }
 }
@@ -91,7 +65,6 @@ class SplashScreen extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){},child: const Icon(Icons.location_city),),
     );
   }
 }

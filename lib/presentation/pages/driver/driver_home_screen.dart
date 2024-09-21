@@ -1,5 +1,6 @@
 import 'package:e_savior/presentation/pages/driver/accepted_ride_screen.dart';
 import 'package:e_savior/presentation/widgets/driver_app_bar.dart';
+import 'package:e_savior/presentation/widgets/driver_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -52,38 +53,7 @@ class _DriverHomeScreenState extends State<DriverHomeScreen> {
             child: CustomAppBar(),
           ),
           // Bottom Navigation
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Column(
-              children: [
-                
-                Container(
-                  color: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.home,
-                            color: Theme.of(context).primaryColor),
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.history, color: Colors.grey),
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.person, color: Colors.grey),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+          const DriverBottomNavigation(),
           // Ride Request Pop-up
           if (showRideRequest)
             Positioned(

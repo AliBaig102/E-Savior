@@ -1,8 +1,6 @@
 import 'package:e_savior/presentation/pages/sign_up.dart';
 import 'package:flutter/material.dart';
 
-
-
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
 
@@ -83,6 +81,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         );
                       }
                     },
+                    style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 10)),
                     child: Text(_currentPage < 2 ? 'Next' : 'Get Started'),
                   ),
                 ],

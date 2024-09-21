@@ -1,8 +1,6 @@
-import 'package:e_savior/presentation/pages/user/rating_driver.dart';
+// import 'package:e_savior/presentation/pages/user/rating_driver.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-
 
 class ArrivedAtDestinationScreen extends StatelessWidget {
   const ArrivedAtDestinationScreen({super.key});
@@ -57,32 +55,24 @@ class ArrivedAtDestinationScreen extends StatelessWidget {
                   const SizedBox(height: 24),
                   Text(
                     'Arrived At Destination',
-                    style: GoogleFonts.poppins(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   const SizedBox(height: 16),
                   Text(
                     'Lorem ipsum is simply dummy text of the Lorem ipsum has been the industry\'s',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(
-                      fontSize: 14,
-                      color: Colors.grey[600],
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        // fontWeight: FontWeight.bold,
+                        color: Colors.grey[700]),
                   ),
                   const SizedBox(height: 24),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) =>  const RateDriverScreen(),
-                          ),);
-
-
+                        Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF4CD964),
@@ -92,12 +82,10 @@ class ArrivedAtDestinationScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 16),
                       ),
                       child: Text(
-                        'Pay Cash \$270',
-                        style: GoogleFonts.poppins(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                        ),
+                        'OK',
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ),
                   ),

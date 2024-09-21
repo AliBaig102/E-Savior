@@ -1,8 +1,6 @@
 import 'package:e_savior/presentation/pages/car/car_selection.dart';
 import 'package:flutter/material.dart';
 
-
-
 class PlanYourRideScreen extends StatefulWidget {
   const PlanYourRideScreen({super.key});
 
@@ -112,21 +110,23 @@ class _PlanYourRideScreenState extends State<PlanYourRideScreen> {
           label: 'Pickoff Point',
           hintText: 'Enter dropoff location',
         ),
-        const SizedBox(height: 20,),
+        const SizedBox(
+          height: 20,
+        ),
         ElevatedButton(
           onPressed: () {
-            Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) =>  const CarSelectionScreen(),
-                          ),
-                        );
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const CarSelectionScreen(),
+              ),
+            );
           },
           style: ElevatedButton.styleFrom(
             minimumSize: const Size(double.infinity, 20),
           ),
           child: Text(
             "Next",
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: theme.textTheme.bodyLarge,
           ),
         ),
       ],

@@ -1,8 +1,6 @@
 import 'package:e_savior/presentation/pages/sign_in.dart';
 import 'package:flutter/material.dart';
 
-
-
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
@@ -20,81 +18,83 @@ class SignUpScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'Sign Up',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Lorem Ipsum is simply dummy text of the Lorem Ipsum has been the industry\'s',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(height: 32),
-              TextFormField(
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.person),
-                  hintText: 'Full Name',
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'Sign Up',
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.email),
-                  hintText: 'Email',
+                const SizedBox(height: 8),
+                Text(
+                  'Lorem Ipsum is simply dummy text of the Lorem Ipsum has been the industry\'s',
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                obscureText: true,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.lock),
-                  hintText: 'Password',
-                  suffixIcon: Icon(Icons.visibility_off),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Checkbox(
-                    value: false,
-                    onChanged: (value) {},
+                const SizedBox(height: 32),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.person),
+                    hintText: 'Full Name',
                   ),
-                  Expanded(
-                    child: Text(
-                      'I agree to the terms & conditions',
-                      style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.email),
+                    hintText: 'Email',
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.lock),
+                    hintText: 'Password',
+                    suffixIcon: Icon(Icons.visibility_off),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: false,
+                      onChanged: (value) {},
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 32),
-              ElevatedButton(
-                onPressed: () {
-                  // Implement sign up logic
-                },
-                child: const Text('Sign Up'),
-              ),
-              const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Already have an account?'),
-                  TextButton(
-                    onPressed: () {
-                       Navigator.of(context).pushReplacement(
+                    Expanded(
+                      child: Text(
+                        'I agree to the terms & conditions',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 32),
+                ElevatedButton(
+                  onPressed: () {
+                    // Implement sign up logic
+                  },
+                  child: const Text('Sign Up'),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Already have an account?'),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) =>  const SignInPage(),
+                            builder: (context) => const SignInPage(),
                           ),
                         );
-                    },
-                    child: const Text('Sign In'),
-                  ),
-                ],
-              ),
-            ],
+                      },
+                      child: const Text('Sign In'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

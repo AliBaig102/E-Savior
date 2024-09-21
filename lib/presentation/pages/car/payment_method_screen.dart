@@ -1,8 +1,6 @@
 import 'package:e_savior/presentation/pages/car/car_selection.dart';
 import 'package:flutter/material.dart';
 
-
-
 class PaymentMethodsScreen extends StatelessWidget {
   const PaymentMethodsScreen({super.key});
 
@@ -57,10 +55,11 @@ class PaymentMethodsScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {
                   // Handle apply button tap
-                   Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) =>  const CarSelectionScreen(),
-                          ),);
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => const CarSelectionScreen(),
+                    ),
+                  );
                 },
                 child: const Text('Apply'),
               ),
@@ -71,7 +70,8 @@ class PaymentMethodsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPaymentOption(BuildContext context, String title, IconData icon, {bool isSelected = false}) {
+  Widget _buildPaymentOption(BuildContext context, String title, IconData icon,
+      {bool isSelected = false}) {
     return ListTile(
       leading: Container(
         padding: const EdgeInsets.all(8),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 class OtpVerificationScreen extends StatefulWidget {
   const OtpVerificationScreen({super.key});
 
@@ -12,7 +11,8 @@ class OtpVerificationScreen extends StatefulWidget {
 }
 
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
-  final List<TextEditingController> _controllers = List.generate(4, (_) => TextEditingController());
+  final List<TextEditingController> _controllers =
+      List.generate(4, (_) => TextEditingController());
   int _resendSeconds = 15;
 
   @override
@@ -52,16 +52,16 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               Text(
                 'Enter Your OTP',
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
               ),
               const SizedBox(height: 8),
               Text(
                 'Lorem Ipsum is simply dummy text of the Lorem Ipsum has been the industry\'s',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.grey[600],
-                ),
+                      color: Colors.grey[600],
+                    ),
               ),
               const SizedBox(height: 32),
               Row(
@@ -100,8 +100,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 child: Text(
                   'Resend Code in $_resendSeconds Sec',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey[600],
-                  ),
+                        color: Colors.grey[600],
+                      ),
                 ),
               ),
               const Spacer(),
@@ -111,10 +111,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   onPressed: () {
                     // Handle OTP verification logic
                     Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) =>  const ResetPasswordScreen(),
-                          ),
-                        );
+                      MaterialPageRoute(
+                        builder: (context) => const ResetPasswordScreen(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).primaryColor,
