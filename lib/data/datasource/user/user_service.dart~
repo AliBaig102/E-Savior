@@ -1,0 +1,198 @@
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_savior/data/models/users/user_model.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
+class UserService {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+
+  // Add user
+  Future<void> addUser(UserModel user) async {
+    try {
+      await _firestore.collection('users').add(user.toMap());
+    } catch (e) {
+      print('Error adding user: $e');
+    }
+  }
+  // Fetch all users
+  Future<List<UserModel?>> getAllUsers() async {
+    try {
+      QuerySnapshot snapshot = await _firestore.collection('users').get();
+      return snapshot.docs
+          .map((doc) => UserModel.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+          .toList();
+    } catch (e) {
+      print('Error fetching all users: $e');
+      return [];
+    }
+  }
+  // Fetch user by auth user ID
+  Future<UserModel?> getUserByAuthUserId(String authUserId) async {
+    try {
+      QuerySnapshot snapshot = await _firestore
+          .collection('users')
+          .where('userId', isEqualTo: authUserId)
+          .limit(1)
+          .get();
+      if (snapshot.docs.isNotEmpty) {
+        return UserModel.fromMap(snapshot.docs.first.data() as Map<String, dynamic>, snapshot.docs.first.id);
+      } else {
+        print('User not found');
+      }
+    } catch (e) {
+      print('Error fetching user: $e');
+    }
+    return null;
+  }
+  // Fetch a single user by user ID
+  Future<UserModel?> getUserById(String userId) async {
+    try {
+      DocumentSnapshot doc = await _firestore.collection('users').doc(userId).get();
+      if (doc.exists) {
+        return UserModel.fromMap(doc.data() as Map<String, dynamic>, doc.id);
+      } else {
+        print('User not found');
+      }
+    } catch (e) {
+      print('Error fetching user: $e');
+    }
+    return null;
+  }
+
+  // Update user details
+  Future<void> updateUser(String userId, UserModel updatedData) async {
+    try {
+      await _firestore.collection('users').doc(userId).update(updatedData.toMap());
+      print('User updated successfully');
+    } catch (e) {
+      print('Error updating user: $e');
+    }
+  }
+
+  // Delete a user
+  Future<void> deleteUser(String userId) async {
+    try {
+      await _firestore.collection('users').doc(userId).delete();
+      print('User deleted successfully');
+    } catch (e) {
+      print('Error deleting user: $e');
+    }
+  }
+
+  // Add or update a user's image
+  Future<String?> saveUserImage(String userId, String filePath) async {
+    try {
+      File file = File(filePath);
+      String fileExt = filePath.split('.').last;
+      String fileName = '${DateTime.now().millisecondsSinceEpoch}.$fileExt';
+      Reference storageRef = _storage.ref().child('user_images/$userId/$fileName');
+
+      UploadTask uploadTask = storageRef.putFile(file);
+      TaskSnapshot snapshot = await uploadTask;
+
+      String downloadUrl = await snapshot.ref.getDownloadURL();
+      await _firestore.collection('users').doc(userId).update({'avatar': downloadUrl});
+      return downloadUrl;
+    } catch (e) {
+      print('Error saving user image: $e');
+      return null;
+    }
+  }
+
+  // Delete a user's image
+  Future<void> deleteUserImage(String userId) async {
+    try {
+      DocumentSnapshot userDoc = await _firestore.collection('users').doc(userId).get();
+
+      if (userDoc.exists) {
+        final data = userDoc.data() as Map<String, dynamic>?;
+        String? imageUrl = data?['avatar'];
+
+        if (imageUrl != null && imageUrl.isNotEmpty) {
+          Reference storageRef = _storage.refFromURL(imageUrl);
+          await storageRef.delete();
+          await _firestore.collection('users').doc(userId).update({'avatar': ''});
+          print('User image deleted successfully');
+        } else {
+          print('No image URL found for this user.');
+        }
+      } else {
+        print('User not found');
+      }
+    } catch (e) {
+      print('Error deleting user image: $e');
+    }
+  }
+
+  // Set user location
+  Future<void> setUserLocation(String userId, String latitude, String longitude) async {
+    try {
+      await _firestore.collection('users').doc(userId).update({
+        'location': {
+          'latitude': latitude,
+          'longitude': longitude,
+        }
+      });
+      print('User location updated successfully');
+    } catch (e) {
+      print('Error setting user location: $e');
+    }
+  }
+
+  // Get user location
+  Future<Map<String, String>?> getUserLocation(String userId) async {
+    try {
+      DocumentSnapshot userDoc = await _firestore.collection('users').doc(userId).get();
+
+      if (userDoc.exists) {
+        final data = userDoc.data() as Map<String, dynamic>?;
+        String? latitude = data?['location']['latitude'];
+        String? longitude = data?['location']['longitude'];
+
+        if (latitude != null && longitude != null) {
+          return {
+            'latitude': latitude,
+            'longitude': longitude,
+          };
+        } else {
+          print('Location data not found for this user.');
+        }
+      } else {
+        print('User not found');
+      }
+    } catch (e) {
+      print('Error fetching user location: $e');
+    }
+    return null; // Return null if user not found or error occurs
+  }
+
+  // Get user role
+  Future<String?> getUserRole(String userId) async {
+    try {
+      DocumentSnapshot userDoc = await _firestore.collection('users').doc(userId).get();
+      if (userDoc.exists) {
+        final data = userDoc.data() as Map<String, dynamic>?;
+        return data?['role'];
+      } else {
+        print('User not found');
+      }
+    } catch (e) {
+      print('Error fetching user role: $e');
+    }
+    return null;
+  }
+
+  // Update user role
+  Future<void> updateUserRole(String userId, String newRole) async {
+    try {
+      await _firestore.collection('users').doc(userId).update({
+        'role': newRole,
+        'updatedAt': Timestamp.now(),
+      });
+      print('User role updated successfully');
+    } catch (e) {
+      print('Error updating user role: $e');
+    }
+  }
+}

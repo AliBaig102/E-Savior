@@ -1,3 +1,4 @@
+import 'package:e_savior/presentation/pages/welcome_screen.dart';
 import 'package:e_savior/presentation/widgets/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -92,7 +93,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     PageTransition(
                       type: PageTransitionType.rightToLeft,
                       duration: const Duration(seconds: 1),
-                      child: LoginScreen(),
+                      child: WelcomeScreen(),
                     ),
                   );
                 },
@@ -130,7 +131,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       PageTransition(
                         type: PageTransitionType.rightToLeft,
                         duration: const Duration(seconds: 1),
-                        child: LoginScreen(),
+                        child: WelcomeScreen(),
                       ),
                     );
                   }

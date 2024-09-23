@@ -1,0 +1,67 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class UserModel {
+  String userId;
+  String email;
+  String username;
+  String number;
+  String address;
+  String avatar;
+  String role;
+  String latitude;
+  String longitude;
+  String authId; // New authId field
+  Timestamp createdAt;
+  Timestamp updatedAt;
+
+  UserModel({
+    required this.email,
+    required this.username,
+    this.number = '',
+    this.address = '',
+    this.avatar = '',
+    this.role = 'user',
+    this.latitude = '',
+    this.longitude = '',
+    required this.authId, // Include authId in the constructor
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  // Convert a UserModel instance to a Map for Firestore
+  Map<String, dynamic> toMap() {
+    return {
+      'email': email,
+      'username': username,
+      'number': number,
+      'address': address,
+      'avatar': avatar,
+      'role': role,
+      'location': {
+        'latitude': latitude,
+        'longitude': longitude,
+      },
+      'authId': authId, // Include authId in the map
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
+    };
+  }
+
+  // Create a UserModel instance from a Map
+  factory UserModel.fromMap(Map<String, dynamic> map, String userId) {
+    return UserModel(
+      userId: userId,
+      email: map['email'],
+      username: map['username'],
+      number: map['number'] ?? '',
+      address: map['address'] ?? '',
+      avatar: map['avatar'] ?? '',
+      role: map['role'] ?? 'user',
+      latitude: map['location']['latitude'] ?? '',
+      longitude: map['location']['longitude'] ?? '',
+      authId: map['authId'] ?? '', // Extract authId from the map
+      createdAt: map['createdAt'],
+      updatedAt: map['updatedAt'],
+    );
+  }
+}

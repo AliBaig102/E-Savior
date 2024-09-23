@@ -8,4 +8,8 @@ class AssetsRes {
 
   static const String PLUGIN_NAME = 'e_savior';
   static const String PLUGIN_VERSION = '1.0.0+1';
+  static const String E_SAVIOR_FILLED = 'assets/images/E-Savior-filled.jpg';
+  static const String E_SAVIOR = 'assets/images/E-Savior.png';
+  static const String BAR_BLACK_ICON = 'assets/images/bar_black_icon.png';
+  static const String PERSON_BLUE_ICON = 'assets/images/person_blue_icon.png';
 }

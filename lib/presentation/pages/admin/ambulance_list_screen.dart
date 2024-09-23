@@ -1,0 +1,420 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_savior/core/my_colors.dart';
+import 'package:e_savior/data/datasource/ambulance/ambulance_service.dart';
+import 'package:e_savior/data/datasource/driver/driver_service.dart';
+import 'package:e_savior/data/models/ambulances/ambulance_model.dart';
+import 'package:e_savior/data/models/drivers/driver_model.dart';
+import 'package:flutter/material.dart';
+import '../../widgets/my_input.dart';
+
+class AmbulanceListScreen extends StatefulWidget {
+  const AmbulanceListScreen({super.key});
+
+  @override
+  State<AmbulanceListScreen> createState() => _AmbulanceListScreenState();
+}
+
+class _AmbulanceListScreenState extends State<AmbulanceListScreen> {
+  AmbulanceService ambulanceService = AmbulanceService();
+  DriverService driverService = DriverService();
+  List<AmbulanceModel> ambulances = [];
+  List<DriverModel?> drivers = [];
+  bool isLoading = true; // Loading state
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchAmbulances();
+  }
+
+  void _fetchAmbulances() async {
+    setState(() {
+      isLoading = true; // Start loading
+    });
+
+    final List<AmbulanceModel> fetchedAmbulances =
+    await ambulanceService.getAllAmbulancesWithDrivers();
+    final List<DriverModel?> fetchedDrivers = await driverService.getAllDriver();
+
+    setState(() {
+      drivers = fetchedDrivers;
+      ambulances = fetchedAmbulances;
+      isLoading = false; // Stop loading
+    });
+  }
+
+  List<String> statuses = ["Available", "On Duty", "Out of Service"];
+  List<String> types = ["Basic", "Advanced", "Critical"];
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _hospitalController = TextEditingController();
+  String? selectedDriver;
+  String? selectedStatus;
+  String? selectedType;
+
+  void _addAmbulance() {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        final AmbulanceModel ambulanceData = AmbulanceModel(
+          ambulanceId: '', // This will be set by Firestore
+          hospitalName: _hospitalController.text,
+          driverId: selectedDriver ?? '',
+          type: selectedType ?? '',
+          status: selectedStatus ?? 'Basic',
+          createdAt: Timestamp.now(),
+          updatedAt: Timestamp.now(),
+        );
+        ambulanceService.addAmbulance(ambulanceData);
+      });
+        _fetchAmbulances();
+      _clearFields();
+      Navigator.of(context).pop(); // Close the dialog
+    }
+  }
+
+  void _editAmbulance(int index) {
+    // Pre-fill the form fields
+    _hospitalController.text = ambulances[index].hospitalName;
+    selectedDriver = ambulances[index].driverId;
+    selectedStatus = ambulances[index].status;
+    selectedType = ambulances[index].type;
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Edit Ambulance'),
+          content: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                MyInput(
+                  controller: _hospitalController,
+                  iconData: Icons.local_hospital,
+                  hintText: 'Hospital Name',
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter the hospital name';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+                DropdownButtonFormField<String>(
+                  value: selectedDriver,
+                  hint: const Text('Select Driver'),
+                  items: drivers.map((driver) {
+                    return DropdownMenuItem<String>(
+                      value: driver!.driverId,
+                      child: Text(driver.name),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedDriver = value;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(100),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Please select a driver';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+                DropdownButtonFormField<String>(
+                  value: selectedStatus,
+                  hint: const Text('Select Status'),
+                  items: statuses.map((status) {
+                    return DropdownMenuItem<String>(
+                      value: status,
+                      child: Text(status),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedStatus = value;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(100),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Please select a status';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+                DropdownButtonFormField<String>(
+                  value: selectedType,
+                  hint: const Text('Select Type'),
+                  items: types.map((type) {
+                    return DropdownMenuItem<String>(
+                      value: type,
+                      child: Text(type),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedType = value;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(100),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Please select a type';
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              style: TextButton.styleFrom(backgroundColor: Colors.red),
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  final updatedAmbulance = AmbulanceModel(
+                    ambulanceId: ambulances[index].ambulanceId, // Keep existing ID
+                    hospitalName: _hospitalController.text,
+                    driverId: selectedDriver ?? '',
+                    type: selectedType ?? '',
+                    status: selectedStatus ?? 'Basic',
+                    createdAt: ambulances[index].createdAt, // Keep existing created date
+                    updatedAt: Timestamp.now(),
+                  );
+
+                  ambulanceService.updateAmbulance(ambulances[index].ambulanceId, updatedAmbulance);
+                  _fetchAmbulances(); // Refresh the list
+                  _clearFields();
+                  Navigator.of(context).pop();
+                }
+              },
+              child: const Text('Update Ambulance'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _deleteAmbulance(int index) {
+    ambulanceService.deleteAmbulance(ambulances[index].ambulanceId); // Call the delete method
+    setState(() {
+      ambulances.removeAt(index);
+    });
+  }
+
+  void _clearFields() {
+    _hospitalController.clear();
+    selectedDriver = null;
+    selectedStatus = null;
+    selectedType = null;
+  }
+
+  void _showAddAmbulanceDialog() {
+    _clearFields(); // Clear fields before showing the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Add Ambulance'),
+          content: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                MyInput(
+                  controller: _hospitalController,
+                  iconData: Icons.local_hospital,
+                  hintText: 'Hospital Name',
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter the hospital name';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+                DropdownButtonFormField<String>(
+                  value: selectedDriver,
+                  hint: const Text('Select Driver'),
+                  items: drivers.map((driver) {
+                    return DropdownMenuItem<String>(
+                      value: driver!.driverId,
+                      child: Text(driver.name),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedDriver = value;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(100),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  validator: (value) {
+                    return null; // Optional
+                  },
+                ),
+                const SizedBox(height: 10),
+                DropdownButtonFormField<String>(
+                  value: selectedStatus,
+                  hint: const Text('Select Status'),
+                  items: statuses.map((status) {
+                    return DropdownMenuItem<String>(
+                      value: status,
+                      child: Text(status),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedStatus = value;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(100),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Please select a status';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+                DropdownButtonFormField<String>(
+                  value: selectedType,
+                  hint: const Text('Select Type'),
+                  items: types.map((type) {
+                    return DropdownMenuItem<String>(
+                      value: type,
+                      child: Text(type),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedType = value;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(100),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Please select a type';
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              style: TextButton.styleFrom(backgroundColor: Colors.red),
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: _addAmbulance,
+              style: TextButton.styleFrom(backgroundColor: Colors.green),
+              child: const Text('Add Ambulance'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Ambulance Management'),
+      ),
+      body: isLoading // Show loader if loading
+          ?  Center(child: CircularProgressIndicator(color: MyColors.primaryColor(context),))
+          : ListView.builder(
+        itemCount: ambulances.length,
+        itemBuilder: (context, index) {
+          return Card(
+            margin: const EdgeInsets.all(8.0),
+            child: ListTile(
+              title: Text(ambulances[index].hospitalName),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Driver: ${ambulances[index].driver == null ? 'No Assign' : ambulances[index].driver!.name}'),
+                  Text('Status: ${ambulances[index].status}'),
+                  Text('Type: ${ambulances[index].type}'),
+                ],
+              ),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.edit, color: Colors.blue),
+                    onPressed: () => _editAmbulance(index),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.red),
+                    onPressed: () => _deleteAmbulance(index),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: MyColors.primaryColor(context),
+        onPressed: _showAddAmbulanceDialog,
+        tooltip: 'Add Ambulance',
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+}

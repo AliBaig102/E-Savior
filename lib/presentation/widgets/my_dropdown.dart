@@ -1,0 +1,56 @@
+import 'package:flutter/material.dart';
+
+import '../../core/my_colors.dart';
+
+class MyDropdown extends StatelessWidget {
+  final String? selectedValue;
+  final List<String> items;
+  final ValueChanged<String?> onChanged;
+  final String? hint;
+
+  const MyDropdown({
+    super.key,
+    required this.selectedValue,
+    required this.items,
+    required this.onChanged,
+    this.hint,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonFormField<String>(
+      value: selectedValue,
+      hint: Text(hint ?? 'Select an option'),
+      items: items.map((item) {
+        return DropdownMenuItem<String>(
+          value: item,
+          child: Text(item),
+        );
+      }).toList(),
+      onChanged: onChanged,
+      validator: (value) {
+        if (value == null) {
+          return 'Please select an option';
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: MyColors.bgSecondaryColor(context),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(100),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(100),
+          borderSide: BorderSide.none,
+        ),
+      ),
+      style: TextStyle(color: MyColors.primaryColor(context)),
+      icon: Icon(
+        Icons.arrow_drop_down,
+        color: MyColors.primaryColor(context),
+      ),
+    );
+  }
+}

@@ -1,6 +1,10 @@
+import 'package:e_savior/presentation/pages/admin/admin_home_screen.dart';
+import 'package:e_savior/presentation/pages/home_screen.dart';
 import 'package:e_savior/presentation/pages/login_screen.dart';
+import 'package:e_savior/presentation/pages/pickup_map_screen.dart';
 import 'package:e_savior/presentation/pages/splash_screen.dart';
 import 'package:e_savior/presentation/pages/welcome_screen.dart';
+import 'package:e_savior/presentation/provider/emergency_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +20,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthenticationProvider()),
+        ChangeNotifierProvider(create: (context) => EmergencyProvider()),
       ],
       child: const MyApp(),
     ),
@@ -30,13 +35,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'E-Savior',
       theme: MyTheme.light(),
       // Set the light theme
       darkTheme: MyTheme.dark(),
       // Set the dark theme
-      themeMode: ThemeMode.system,
-      home: WelcomeScreen(),
+      themeMode: ThemeMode.light,
+      home: SplashScreen(),
     );
   }
 }

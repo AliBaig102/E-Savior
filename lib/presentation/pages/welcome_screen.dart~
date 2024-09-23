@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
 
-import 'driver/driver_login_screen.dart';
-
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
@@ -87,14 +85,7 @@ class WelcomeScreen extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         // Navigate to Driver Login Screen
-                        Navigator.pushReplacement(
-                          context,
-                          PageTransition(
-                            type: PageTransitionType.rightToLeft,
-                            duration: const Duration(seconds: 1),
-                            child: DriverLoginScreen(),
-                          ),
-                        );
+                        Navigator.pushNamed(context, '/driverLogin');
                       },
                       child: Text('Login as a Driver'),
                       style: ElevatedButton.styleFrom(

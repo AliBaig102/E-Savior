@@ -1,0 +1,138 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_savior/presentation/provider/authentication_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/emergency_provider.dart';
+
+class DriverLocationMapScreen extends StatefulWidget {
+  const DriverLocationMapScreen({Key? key}) : super(key: key);
+
+  @override
+  State<DriverLocationMapScreen> createState() => _DriverLocationMapScreenState();
+}
+
+class _DriverLocationMapScreenState extends State<DriverLocationMapScreen> {
+  late GoogleMapController _mapController;
+  LatLng _driverLocation = LatLng(0, 0); // Default location
+  Set<Marker> _markers = {};
+
+  @override
+  void initState() {
+    super.initState();
+    // Load driver's initial location from the provider
+    final emergencyProvider = Provider.of<EmergencyProvider>(context, listen: false);
+    _driverLocation = LatLng(
+      emergencyProvider.driverLatitude ?? 0,
+      emergencyProvider.driverLongitude ?? 0,
+    );
+
+    // Listen to new bookings
+    _listenForBookings();
+  }
+
+  void _listenForBookings() {
+    FirebaseFirestore.instance
+        .collection('bookings')
+        .where('isAccepted', isEqualTo: false)
+        .orderBy('createdAt', descending: true)
+        .limit(1)
+        .snapshots()
+        .listen((snapshot) {
+      if (snapshot.docs.isNotEmpty) {
+        // Handle new booking notification
+        _showNewBookingNotification(snapshot.docs.first);
+      }
+    });
+  }
+
+  void _showNewBookingNotification(DocumentSnapshot booking) {
+    // Show a dialog or a snackbar for new booking
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('New Booking Available'),
+          content: Text('Booking ID: ${booking.id} - Type: ${booking['ambulanceType']}'),
+          actions: [
+            TextButton(
+              style: TextButton.styleFrom(backgroundColor: Colors.green),
+              child: Text('Accept'),
+              onPressed: () {
+                // Handle booking acceptance logic
+                _acceptBooking(booking.id);
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(backgroundColor: Colors.red),
+              child: Text('Reject'),
+              onPressed: () {
+                // Handle booking rejection logic if needed
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _acceptBooking(String bookingId) async {
+    // Update Firestore to accept the booking
+    final emergencyProvider = Provider.of<EmergencyProvider>(context, listen: false);
+    final authProvider = Provider.of<AuthenticationProvider>(context, listen: false);
+    String driverId = authProvider.driver!.driverId; // Replace with actual driver ID
+    emergencyProvider.updateDriverId(driverId);
+
+    await FirebaseFirestore.instance.collection('bookings').doc(bookingId).update({
+      'isAccepted': true,
+      'driverId': driverId,
+      'driverAddress': emergencyProvider.driverAddress,
+      'driverLatitude': emergencyProvider.driverLatitude,
+      'driverLongitude': emergencyProvider.driverLongitude,
+    });
+
+    // Optionally, show a confirmation message
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Booking $bookingId accepted.')),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final emergencyProvider = Provider.of<EmergencyProvider>(context);
+
+    // Update driver location if it changes
+    _driverLocation = LatLng(
+      emergencyProvider.driverLatitude ?? 0,
+      emergencyProvider.driverLongitude ?? 0,
+    );
+
+    // Update markers
+    _markers.clear();
+    _markers.add(Marker(
+      markerId: MarkerId('driver'),
+      position: _driverLocation,
+      infoWindow: InfoWindow(title: 'Driver Location'),
+    ));
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Driver Location Map'),
+      ),
+      body: GoogleMap(
+        onMapCreated: (GoogleMapController controller) {
+          _mapController = controller;
+        },
+        initialCameraPosition: CameraPosition(
+          target: _driverLocation,
+          zoom: 14,
+        ),
+        markers: _markers,
+        myLocationEnabled: true,
+      ),
+    );
+  }
+}

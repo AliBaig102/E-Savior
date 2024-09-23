@@ -8,7 +8,6 @@ import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
 import 'dart:async';
 
 import '../../core/my_assets.dart';
-import '../../core/my_colors.dart';
 import '../widgets/logo.dart';
 import 'onboarding_screen.dart';
 
@@ -99,8 +98,8 @@ class _SplashScreenState extends State<SplashScreen>
               ],
             ),
             const SizedBox(height: 20),
-             SpinKitWave(
-              color: MyColors.primaryColor(context),
+            const SpinKitWave(
+              color: Colors.yellow,
               size: 30,
               itemCount: 5,
             ),

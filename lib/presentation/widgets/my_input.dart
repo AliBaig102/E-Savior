@@ -1,0 +1,46 @@
+import 'package:flutter/material.dart';
+
+import '../../core/my_colors.dart';
+
+class MyInput extends StatelessWidget {
+  final String hintText;
+  final TextEditingController controller;
+  final IconData iconData;
+  final String? Function(String?)? validator;
+  final bool obscureText;
+
+  const MyInput({
+    super.key,
+    required this.hintText,
+    required this.controller,
+    required this.iconData,
+    this.validator,
+    this.obscureText = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: controller,
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: MyColors.bgSecondaryColor(context),
+        hintText: hintText,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(100),
+          borderSide: BorderSide.none,
+        ),
+        prefixIcon: Icon(
+          iconData,
+          color: MyColors.primaryColor(context),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(100),
+          borderSide: BorderSide.none,
+        ),
+      ),
+      validator: validator,
+    );
+  }
+}
